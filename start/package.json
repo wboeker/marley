@@ -1,0 +1,21 @@
+{
+  "name": "marley",
+  "version": "1.0.0",
+  "description": "A Slack Bot that sends you \"memories\" of PRs past",
+  "main": "marleybot.js",
+  "dependencies": {
+    "botbuilder-adapter-slack": "^1.0.8",
+    "botkit": "^4.6.2",
+    "@google-cloud/secret-manager": "2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wboeker/Marley"
+  },
+  "author": "wboeker, alfovo",
+  "license": "Apache-2.0"
+}
