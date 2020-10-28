@@ -23,6 +23,4 @@ class ConduitClient {
   }
 }
 
-module.exports = {
-  ConduitClient,
-};
+module.exports = { ConduitClient };

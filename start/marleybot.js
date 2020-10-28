@@ -24,7 +24,7 @@ const {
 } = require("botbuilder-adapter-slack");
 const { SecretManagerServiceClient } = require("@google-cloud/secret-manager");
 
-const ConduitClient = require("./conduitClient.js");
+const { ConduitClient } = require("./conduitClient.js");
 const BASE_PHABRICATOR_URL = "https://phabricator.khanacademy.org";
 
 /**
