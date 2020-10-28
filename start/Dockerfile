@@ -21,5 +21,6 @@ RUN npm install
 
 # Bundle app source.
 COPY marleybot.js /src
+COPY conduitClient.js /src
 
 CMD ["node", "marleybot"]
