@@ -43,7 +43,7 @@ async function accessSecretVersion (name) {
 /**
  * Asynchronous function to initialize kittenbot.
  */
-async function kittenbotInit () {
+async function marleybotInit () {
   const adapter = new SlackAdapter({
     clientSigningSecret: await accessSecretVersion('client-signing-secret'),
     botToken: await accessSecretVersion('bot-token')
@@ -59,9 +59,9 @@ async function kittenbotInit () {
   controller.ready(() => {
     controller.hears(['hello', 'hi'], ['message', 'direct_message'],
       async (bot, message) => {
-        await bot.reply(message, 'Meow. :smile_cat:')
+        await bot.reply(message, 'Nice work. :man_in_business_suit_levitating:')
       })
   })
 }
 
-kittenbotInit()
+marleybotInit()
