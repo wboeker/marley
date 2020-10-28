@@ -72,7 +72,7 @@ async function marleybotInit() {
       ["hello", "hi"],
       ["message", "direct_message"],
       async (bot, message) => {
-        await bot.reply(message, userData);
+        await bot.reply(message, userData[0].fields.username);
       }
     );
   });
