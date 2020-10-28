@@ -1,41 +1,8 @@
-# Build a Slack Bot with Node.js on Cloud Run
+# "Marley", a Slack Bot with Node.js on Cloud Run
 
-This repository contains the source code for the [Build a Slack Bot with Node.js on Cloud Run
-Google codelab][cloud-slack-bot-codelab].
+This repository contains the code for Marley, a slackbot that notifies slack users of their PRs of the past, named after Jacob Marley, the ghost of Christmas past. The inital version was created by following the [Build a Slack Bot with Node.js on Cloud Run Google codelab][cloud-slack-bot-codelab] tutorial.
 
-[![Build Status][travis-status-image]][travis-status]
-
-[cloud-slack-bot-codelab]: https://codelabs.developers.google.com/codelabs/cloud-slack-bot/
-[travis-status]: https://travis-ci.org/googlecodelabs/cloud-slack-bot
-[travis-status-image]: https://travis-ci.org/googlecodelabs/cloud-slack-bot.svg?branch=master
-
-## Resources
-
-### Codelabs and Samples
-
-- [Google codelabs][codelabs]
-- [Slack integrations on Google Cloud Platform samples][slack-samples]
-- [Node.js on Google Cloud Platform samples][nodejs-samples]
-
-[codelabs]: https://g.co/codelabs
-[nodejs-samples]: https://github.com/GoogleCloudPlatform/nodejs-docs-samples
-[slack-samples]: https://github.com/GoogleCloudPlatform/slack-samples
-
-### Documentation
-
-- [Google Cloud Platform][cloud]
-- [Google Cloud Run][run]
-- [Google Container Engine][container-engine]
-- [Google Container Registry][container-registry]
-- [Google Secret Manager][secret-manager]
-- [Slack API][slack-api]
-
-[cloud]: https://cloud.google.com/
-[run]: https://cloud.google.com/run
-[container-engine]: https://cloud.google.com/container-engine/
-[container-registry]: https://cloud.google.com/container-registry/
-[secret-manager]: https://cloud.google.com/secret-manager
-[slack-api]: https://api.slack.com/
+Marley was created for the Khan Academy Hackathon in November 2020.
 
 ## License
 

@@ -22,4 +22,4 @@ RUN npm install
 # Bundle app source.
 COPY marleybot.js /src
 
-CMD ["node", "kittenbot"]
+CMD ["node", "marleybot"]
