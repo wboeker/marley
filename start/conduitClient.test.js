@@ -8,7 +8,7 @@ it("ConduitClient has a fetchUser method", async () => {
   const userData = await client.fetchUser("wendyboeker").catch((error) => {
     console.log(error);
   });
-  expect(userData).toBe([
+  expect(userData).toEqual([
     {
       attachments: {},
       fields: {
