@@ -41,7 +41,7 @@ async function accessSecretVersion (name) {
 }
 
 /**
- * Asynchronous function to initialize kittenbot.
+ * Asynchronous function to initialize marleybot.
  */
 async function marleybotInit () {
   const adapter = new SlackAdapter({
