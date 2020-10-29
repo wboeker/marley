@@ -66,6 +66,9 @@ async function marleybotInit() {
   const userData = await client.fetchUser("wendyboeker").catch((error) => {
     console.log(error);
   });
+  const diffsData = await client.fetchDiffs(userData.phid).catch((error) => {
+    console.log(error);
+  });
 
   controller.ready(() => {
     controller.hears(
@@ -74,6 +77,13 @@ async function marleybotInit() {
       async (bot, message) => {
         await bot.reply(message, userData[0].fields.username);
       }
+    );
+    controller.hears(
+        ["memories"],
+        ["message", "direct_message"],
+        async (bot, message) => {
+          await bot.reply(message, diffsData[0].fields.uri);
+        }
     );
   });
 }
