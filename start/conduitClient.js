@@ -1,7 +1,11 @@
 const bent = require("bent");
 const formurlencoded = require("form-urlencoded").default;
 
-// A way to access the Phabricator API
+const { is31DaysOrMoreApart } = require("./helpers.js");
+
+/**
+ * A client for accessing the Phabricator API.
+ */
 class ConduitClient {
   constructor(apiToken, basePhabricatorUrl) {
     this.apiToken = apiToken;
@@ -31,9 +35,26 @@ class ConduitClient {
       },
     };
 
-    const response = await get("/api/differential.revision.search", formurlencoded(headers));
+    const response = await get(
+      "/api/differential.revision.search",
+      formurlencoded(headers)
+    );
     const jsonResponse = await response.json();
     return jsonResponse.result.data;
+  }
+
+  async getMonthAgoDiffUrl(username) {
+    const userData = await this.fetchUser(username).catch((error) => {
+      console.log(error);
+    });
+    const diffsData = await this.fetchDiffs(userData[0].phid).catch((error) => {
+      console.log(error);
+    });
+    const today = Date.now();
+    const approxMonthAgoDiff = diffsData.find((diff) =>
+      is31DaysOrMoreApart(diff.fields.dateModified * 1000, today)
+    );
+    return approxMonthAgoDiff.fields.uri;
   }
 }
 

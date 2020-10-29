@@ -4,6 +4,14 @@ This repository contains the code for Marley, a slackbot that notifies slack use
 
 Marley was created for the Khan Academy Hackathon in November 2020.
 
+## Testing
+
+To run integration tests pulling data from phabricator in `conduitClient.test.js` create a `.env` file in the `start` directory with your Phabricator api token:
+
+```
+API_TOKEN=your-phabricator-api-token
+```
+
 ## License
 
 Apache Version 2.0
