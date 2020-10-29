@@ -4,11 +4,11 @@ const { ConduitClient } = require("./conduitClient.js");
 
 dotenv.config();
 const BASE_PHABRICATOR_URL = "https://phabricator.khanacademy.org";
-const API_TOKEN = process.env.API_TOKEN;
+const CONDUIT_TOKEN = process.env.CONDUIT_TOKEN;
 
 describe("Integration tests for conduit client", () => {
   it("has a fetchUser method", async () => {
-    const client = new ConduitClient(API_TOKEN, BASE_PHABRICATOR_URL);
+    const client = new ConduitClient(CONDUIT_TOKEN, BASE_PHABRICATOR_URL);
     const userData = await client.fetchUser("wendyboeker").catch((error) => {
       console.log(error);
     });
@@ -33,7 +33,7 @@ describe("Integration tests for conduit client", () => {
   });
 
   it("has a fetchDiffs method", async () => {
-    const client = new ConduitClient(API_TOKEN, BASE_PHABRICATOR_URL);
+    const client = new ConduitClient(CONDUIT_TOKEN, BASE_PHABRICATOR_URL);
     const userData = await client.fetchUser("wendyboeker").catch((error) => {
       console.log(error);
     });
@@ -46,7 +46,7 @@ describe("Integration tests for conduit client", () => {
   });
 
   it("can fetchDiff from a month or more ago", async () => {
-    const client = new ConduitClient(API_TOKEN, BASE_PHABRICATOR_URL);
+    const client = new ConduitClient(CONDUIT_TOKEN, BASE_PHABRICATOR_URL);
     const diffUrl = await client
       .getMonthAgoDiffUrl("wendyboeker")
       .catch((error) => {

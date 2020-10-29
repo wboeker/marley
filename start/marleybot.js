@@ -6,7 +6,9 @@ const {
 const { SecretManagerServiceClient } = require("@google-cloud/secret-manager");
 
 const { ConduitClient } = require("./conduitClient.js");
+const { SlackClient } = require("./slackClient.js");
 const BASE_PHABRICATOR_URL = "https://phabricator.khanacademy.org";
+const BASE_SLACK_URL = "https://slack.com";
 
 /**
  * Returns the secret string from Google Cloud Secret Manager
@@ -41,7 +43,7 @@ async function marleybotInit() {
     webhook_uri: "/api/messages",
     adapter: adapter,
   });
-
+  const slackClient = new SlackClient(adapter.botToken, BASE_SLACK_URL);
   const conduitAPIToken = await accessSecretVersion("conduit-api-token");
   const client = new ConduitClient(conduitAPIToken, BASE_PHABRICATOR_URL);
   const userData = await client.fetchUser("wendyboeker").catch((error) => {
@@ -60,11 +62,14 @@ async function marleybotInit() {
       }
     );
     controller.hears(
-      ["memories"],
-      ["message", "direct_message"],
-      async (bot, message) => {
-        await bot.reply(message, diffsData[0].fields.uri);
-      }
+        ["memories"],
+        ["message", "direct_message"],
+        async (bot, message) => {
+          const userData = await slackClient.fetchUser(message.user).catch((error) => {
+            console.log(error);
+          });
+          await bot.reply(message, userData.profile.email);
+        }
     );
   });
 }
