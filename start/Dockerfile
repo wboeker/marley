@@ -22,5 +22,7 @@ RUN npm install
 # Bundle app source.
 COPY marleybot.js /src
 COPY conduitClient.js /src
+COPY slackClient.js /src
+COPY helpers.js /src
 
 CMD ["node", "marleybot"]
