@@ -30,7 +30,10 @@ it("ConduitClient has a fetchUser method", async () => {
 
 it("ConduitClient has a fetchDiffs method", async () => {
   const client = new ConduitClient(API_TOKEN, BASE_PHABRICATOR_URL);
-  const diffsData = await client.fetchDiffs("PHID-USER-kqrp2sxw4wfsi4qdb4sh").catch((error) => {
+  const userData = await client.fetchUser("wendyboeker").catch((error) => {
+    console.log(error);
+  });
+  const diffsData = await client.fetchDiffs(userData[0].phid).catch((error) => {
     console.log(error);
   });
   console.log(diffsData);

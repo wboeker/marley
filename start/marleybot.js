@@ -66,7 +66,7 @@ async function marleybotInit() {
   const userData = await client.fetchUser("wendyboeker").catch((error) => {
     console.log(error);
   });
-  const diffsData = await client.fetchDiffs(userData.phid).catch((error) => {
+  const diffsData = await client.fetchDiffs(userData[0].phid).catch((error) => {
     console.log(error);
   });
 
