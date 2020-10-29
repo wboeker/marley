@@ -3,7 +3,9 @@ const formurlencoded = require("form-urlencoded").default;
 
 const { is31DaysOrMoreApart } = require("./helpers.js");
 
-// A way to access the Phabricator API
+/**
+ * A client for accessing the Phabricator API.
+ */
 class ConduitClient {
   constructor(apiToken, basePhabricatorUrl) {
     this.apiToken = apiToken;
