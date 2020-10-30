@@ -73,6 +73,7 @@ describe("Integration tests for conduit client", () => {
       .catch((error) => {
         console.log(error);
       });
+    console.log(diffMessage);
     expect(diffMessage).toContain("https://phabricator.khanacademy.org/");
   });
 });
