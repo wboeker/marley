@@ -27,6 +27,8 @@ async function accessSecretVersion(name, versionNumber) {
   return payload;
 }
 
+
+
 /**
  * Asynchronous function to initialize marleybot.
  */
@@ -74,10 +76,9 @@ async function marleybotInit() {
           .catch((error) => {
             console.log(error);
           });
-        console.log("USER DATA", userData);
-        console.log("USER DATA PROFILE", userData.profile);
-        console.log("USER DATA EMAIL", userData.profile.email);
-        await bot.reply(message, userData);
+        const username = userData.profile.email.split("@")[0];
+        const diff = client.getMonthAgoDiffUrl(username);
+        await bot.reply(message, diff);
       }
     );
   });
