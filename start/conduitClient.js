@@ -59,8 +59,7 @@ class ConduitClient {
     const options = { year: "numeric", month: "long", day: "numeric" };
     let diffSummary = approxMonthAgoDiff.fields.summary;
     if (approxMonthAgoDiff.fields.summary.length > 200) {
-      diffSummary =
-        approxMonthAgoDiff.fields.summary.substring(0, 200) + "\n" + "...";
+      diffSummary = approxMonthAgoDiff.fields.summary.substring(0, 200) + "...";
     }
 
     return {
