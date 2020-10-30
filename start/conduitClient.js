@@ -48,7 +48,7 @@ class ConduitClient {
     const userData = await this.fetchUser(username).catch((error) => {
       console.log(error);
     });
-    if (!userData) {
+    if (userData.length < 1) {
       return {
         error:
           "I'm sorry, I can't find your phabricator username! It must be different than your email address.",

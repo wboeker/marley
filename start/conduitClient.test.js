@@ -53,7 +53,7 @@ describe("Integration tests for conduit client", () => {
     expect(diffsData.length).toBeGreaterThan(1);
   });
 
-  fit("can fetchDiff from a month or more ago given a phabricator username", async () => {
+  it("can fetchDiff from a month or more ago given a phabricator username", async () => {
     const diffObj = await client.getMonthAgoDiff("volpert").catch((error) => {
       console.log(error);
     });
@@ -63,6 +63,15 @@ describe("Integration tests for conduit client", () => {
     expect(diffObj.phabricatorUrl).toContain(
       "https://phabricator.khanacademy.org/"
     );
+  });
+
+  it("getMonthAgoDiff fails gracefully if it can't find user data", async () => {
+    const diffData = await client
+      .getMonthAgoDiff("alexvolpert")
+      .catch((error) => {
+        console.log(error);
+      });
+    expect(diffData).toHaveProperty("error");
   });
 
   it("can getMonthAgoDiffMessage given a phabricator username", async () => {
