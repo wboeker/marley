@@ -15,11 +15,11 @@ const BASE_SLACK_URL = "https://slack.com";
  * @param {string} name The name of the secret.
  * @return {string} The string value of the secret.
  */
-async function accessSecretVersion(name) {
+async function accessSecretVersion(name, version) {
   const client = new SecretManagerServiceClient();
   const projectId = process.env.PROJECT_ID;
   const [version] = await client.accessSecretVersion({
-    name: `projects/${projectId}/secrets/${name}/versions/2`,
+    name: `projects/${projectId}/secrets/${name}/versions/${version}`,
   });
 
   // Extract the payload as a string.
@@ -33,8 +33,8 @@ async function accessSecretVersion(name) {
  */
 async function marleybotInit() {
   const adapter = new SlackAdapter({
-    clientSigningSecret: await accessSecretVersion("client-signing-secret"),
-    botToken: await accessSecretVersion("bot-token"),
+    clientSigningSecret: await accessSecretVersion("client-signing-secret", "1"),
+    botToken: await accessSecretVersion("bot-token", "2"),
   });
 
   adapter.use(new SlackEventMiddleware());
@@ -44,7 +44,7 @@ async function marleybotInit() {
     adapter: adapter,
   });
   const slackClient = new SlackClient(adapter.botToken, BASE_SLACK_URL);
-  const conduitAPIToken = await accessSecretVersion("conduit-api-token");
+  const conduitAPIToken = await accessSecretVersion("conduit-api-token", "1");
   const client = new ConduitClient(conduitAPIToken, BASE_PHABRICATOR_URL);
   const userData = await client.fetchUser("wendyboeker").catch((error) => {
     console.log(error);
