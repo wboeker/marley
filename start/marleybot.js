@@ -21,7 +21,7 @@ async function accessSecretVersion(name, versionNumber) {
   const [version] = await client.accessSecretVersion({
     name: `projects/${projectId}/secrets/${name}/versions/${versionNumber}`,
   });
-
+  console.log("NAME", name, " VERSION NUMBER", versionNumber);
   // Extract the payload as a string.
   const payload = version.payload.data.toString("utf8");
 
