@@ -65,11 +65,11 @@ async function marleybotInit() {
             .catch((error) => {
               console.log(error);
             });
-          const diff = await conduitClient.getMonthAgoDiffMessage(
-            emailName,
-            "month"
+          const diff = await conduitClient.getMonthAgoDiff(emailName);
+          await bot.reply(
+            message,
+            messageTemplate(diff.phabricatorUrl, diff.title, diff.summary)
           );
-          await bot.reply(message, messageTemplate);
         }
       }
     );
