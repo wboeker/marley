@@ -24,5 +24,6 @@ COPY marleybot.js /src
 COPY conduitClient.js /src
 COPY slackClient.js /src
 COPY helpers.js /src
+COPY message.js /src
 
 CMD ["node", "marleybot"]

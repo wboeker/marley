@@ -56,21 +56,7 @@ async function marleybotInit() {
 
   controller.ready(() => {
     controller.hears(
-      ["hello", "hi"],
-      ["message", "direct_message"],
-      async (bot, message) => {
-        if (message.bot_id != message.user) {
-          const emailName = await slackClient
-            .fetchEmailName(message.user)
-            .catch((error) => {
-              console.log(error);
-            });
-          await bot.reply(message, `What's up, ${emailName}?`);
-        }
-      }
-    );
-    controller.hears(
-      ["memories"],
+      ["memories", "remind"],
       ["message", "direct_message"],
       async (bot, message) => {
         if (message.bot_id != message.user) {
