@@ -1,4 +1,4 @@
-const messageTemplate = (diffUrl, diffTitle, diffSummary) => {
+const messageTemplate = (diffUrl, diffTitle, diffSummary, diffDateClosed) => {
   return {
     blocks: [
       {
@@ -15,7 +15,7 @@ const messageTemplate = (diffUrl, diffTitle, diffSummary) => {
         type: "context",
         elements: [
           {
-            text: "*September 23, 2020*",
+            text: `*${diffDateClosed}*`,
             type: "mrkdwn",
           },
         ],
@@ -24,7 +24,7 @@ const messageTemplate = (diffUrl, diffTitle, diffSummary) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: diffSummary,
+          text: `_${diffSummary}_`,
           verbatim: false,
         },
       },

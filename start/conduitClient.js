@@ -54,10 +54,14 @@ class ConduitClient {
     const approxMonthAgoDiff = diffsData.find((diff) =>
       is31DaysOrMoreApart(diff.fields.dateModified * 1000, today)
     );
+    const dateClosed = new Date(approxMonthAgoDiff.fields.dateModified * 1000);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+
     return {
       phabricatorUrl: approxMonthAgoDiff.fields.uri,
       title: approxMonthAgoDiff.fields.title,
       summary: approxMonthAgoDiff.fields.summary,
+      dateClosed: dateClosed.toLocaleDateString("en-US", options),
     };
   }
 

@@ -68,7 +68,12 @@ async function marleybotInit() {
           const diff = await conduitClient.getMonthAgoDiff(emailName);
           await bot.reply(
             message,
-            messageTemplate(diff.phabricatorUrl, diff.title, diff.summary)
+            messageTemplate(
+              diff.phabricatorUrl,
+              diff.title,
+              diff.summary,
+              diff.dateClosed
+            )
           );
         }
       }
