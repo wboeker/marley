@@ -7,6 +7,7 @@ const { SecretManagerServiceClient } = require("@google-cloud/secret-manager");
 
 const { ConduitClient } = require("./conduitClient.js");
 const { SlackClient } = require("./slackClient.js");
+const { messageTemplate } = require("./message.js");
 const BASE_PHABRICATOR_URL = "https://phabricator.khanacademy.org";
 const BASE_SLACK_URL = "https://slack.com";
 
@@ -82,7 +83,7 @@ async function marleybotInit() {
             emailName,
             "month"
           );
-          await bot.reply(message, `Hi, ${emailName}! \n\n\n${diff}`);
+          await bot.reply(message, messageTemplate);
         }
       }
     );
