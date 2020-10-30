@@ -8,6 +8,7 @@ class SlackClient {
   }
 
   async fetchUser(userID) {
+    console.log("USER ID IN FETCH USER", userID);
     const get = bent(this.baseSlackUrl, "GET", 200);
     const response = await get("/api/users.profile.get?token=" + this.apiToken + "&user=" + userID);
     const jsonResponse = await response.json();

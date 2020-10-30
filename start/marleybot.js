@@ -68,7 +68,10 @@ async function marleybotInit() {
           const userData = await slackClient.fetchUser(message.user).catch((error) => {
             console.log(error);
           });
-          await bot.reply(message, userData.profile.email);
+          console.log("USER DATA", userData);
+          console.log("USER DATA PROFILE", userData.profile);
+          console.log("USER DATA EMAIL", userData.profile.email);
+          await bot.reply(message, userData);
         }
     );
   });
