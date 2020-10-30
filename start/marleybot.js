@@ -66,15 +66,22 @@ async function marleybotInit() {
               console.log(error);
             });
           const diff = await conduitClient.getMonthAgoDiff(emailName);
-          await bot.reply(
-            message,
-            messageTemplate(
-              diff.phabricatorUrl,
-              diff.title,
-              diff.summary,
-              diff.dateClosed
-            )
-          );
+          if (!diff) {
+            await bot.reply(
+              message,
+              "I'm sorry, I can't find your phabricator username! It must be different than your email address."
+            );
+          } else {
+            await bot.reply(
+              message,
+              messageTemplate(
+                diff.phabricatorUrl,
+                diff.title,
+                diff.summary,
+                diff.dateClosed
+              )
+            );
+          }
         }
       }
     );

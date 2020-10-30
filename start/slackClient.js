@@ -23,9 +23,6 @@ class SlackClient {
       console.log(error);
     });
     let emailName = userData.profile.email.split("@")[0];
-    if (emailName == "alexvolpert") {
-      emailName = "volpert";
-    }
     return emailName;
   }
 }

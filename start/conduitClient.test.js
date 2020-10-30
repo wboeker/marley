@@ -53,12 +53,10 @@ describe("Integration tests for conduit client", () => {
     expect(diffsData.length).toBeGreaterThan(1);
   });
 
-  it("can fetchDiff from a month or more ago given a phabricator username", async () => {
-    const diffObj = await client
-      .getMonthAgoDiff("wendyboeker")
-      .catch((error) => {
-        console.log(error);
-      });
+  fit("can fetchDiff from a month or more ago given a phabricator username", async () => {
+    const diffObj = await client.getMonthAgoDiff("volpert").catch((error) => {
+      console.log(error);
+    });
     expect(diffObj).toHaveProperty("phabricatorUrl");
     expect(diffObj).toHaveProperty("summary");
     expect(diffObj).toHaveProperty("title");
