@@ -31,9 +31,12 @@ async function accessSecretVersion(name, versionNumber) {
  * Asynchronous function to initialize marleybot.
  */
 async function marleybotInit() {
-    const botToken = await accessSecretVersion("bot-token", "2");
+  const botToken = await accessSecretVersion("bot-token", "2");
   const adapter = new SlackAdapter({
-    clientSigningSecret: await accessSecretVersion("client-signing-secret", "1"),
+    clientSigningSecret: await accessSecretVersion(
+      "client-signing-secret",
+      "1"
+    ),
     botToken: botToken,
   });
 
@@ -62,18 +65,20 @@ async function marleybotInit() {
       }
     );
     controller.hears(
-        ["memories"],
-        ["message", "direct_message"],
-        async (bot, message) => {
-          console.log("MESSAGE", message, "MESSAGE USER", message.user);
-          const userData = await slackClient.fetchUser(message.user).catch((error) => {
+      ["memories"],
+      ["message", "direct_message"],
+      async (bot, message) => {
+        console.log("MESSAGE", message, "MESSAGE USER", message.user);
+        const userData = await slackClient
+          .fetchUser(message.user)
+          .catch((error) => {
             console.log(error);
           });
-          console.log("USER DATA", userData);
-          console.log("USER DATA PROFILE", userData.profile);
-          console.log("USER DATA EMAIL", userData.profile.email);
-          await bot.reply(message, userData);
-        }
+        console.log("USER DATA", userData);
+        console.log("USER DATA PROFILE", userData.profile);
+        console.log("USER DATA EMAIL", userData.profile.email);
+        await bot.reply(message, userData);
+      }
     );
   });
 }
