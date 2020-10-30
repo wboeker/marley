@@ -31,9 +31,10 @@ async function accessSecretVersion(name, versionNumber) {
  * Asynchronous function to initialize marleybot.
  */
 async function marleybotInit() {
+    const botToken = await accessSecretVersion("bot-token", "2");
   const adapter = new SlackAdapter({
     clientSigningSecret: await accessSecretVersion("client-signing-secret", "1"),
-    botToken: await accessSecretVersion("bot-token", "2"),
+    botToken: botToken,
   });
 
   adapter.use(new SlackEventMiddleware());
@@ -42,7 +43,7 @@ async function marleybotInit() {
     webhook_uri: "/api/messages",
     adapter: adapter,
   });
-  const slackClient = new SlackClient(adapter.botToken, BASE_SLACK_URL);
+  const slackClient = new SlackClient(botToken, BASE_SLACK_URL);
   const conduitAPIToken = await accessSecretVersion("conduit-api-token", "1");
   const client = new ConduitClient(conduitAPIToken, BASE_PHABRICATOR_URL);
   const userData = await client.fetchUser("wendyboeker").catch((error) => {
