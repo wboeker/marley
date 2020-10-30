@@ -58,9 +58,11 @@ class ConduitClient {
     const dateClosed = new Date(approxMonthAgoDiff.fields.dateModified * 1000);
     const options = { year: "numeric", month: "long", day: "numeric" };
     let diffSummary = approxMonthAgoDiff.fields.summary;
-    if (approxMonthAgoDiff.fields.summary.length > 300) {
-      diffSummary = approxMonthAgoDiff.fields.summary.substring(0, 300) + "...";
+    if (approxMonthAgoDiff.fields.summary.length > 200) {
+      diffSummary =
+        approxMonthAgoDiff.fields.summary.substring(0, 200) + "\n" + "...";
     }
+
     return {
       phabricatorUrl: approxMonthAgoDiff.fields.uri,
       title: approxMonthAgoDiff.fields.title,
