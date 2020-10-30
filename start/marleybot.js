@@ -53,10 +53,6 @@ async function marleybotInit() {
     BASE_PHABRICATOR_URL
   );
 
-  const diffsData = await client.fetchDiffs(userData[0].phid).catch((error) => {
-    console.log(error);
-  });
-
   controller.ready(() => {
     controller.hears(
       ["hello", "hi"],
