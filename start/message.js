@@ -32,7 +32,7 @@ const messageTemplate = (diffUrl, diffTitle, diffSummary, diffDateClosed) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: diffTitle,
+          text: `*${diffTitle}*`,
         },
         accessory: {
           type: "button",
