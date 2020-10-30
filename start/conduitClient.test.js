@@ -1,14 +1,23 @@
 const dotenv = require("dotenv");
 
 const { ConduitClient } = require("./conduitClient.js");
+const { SlackClient } = require("./slackClient.js");
 
 dotenv.config();
 const BASE_PHABRICATOR_URL = "https://phabricator.khanacademy.org";
 const CONDUIT_TOKEN = process.env.CONDUIT_TOKEN;
+const BASE_SLACK_URL = "https://slack.com";
+const BOT_TOKEN = process.env.BOT_TOKEN;
 
 describe("Integration tests for conduit client", () => {
+  const slackClient = new SlackClient(BOT_TOKEN, BASE_SLACK_URL);
+  const client = new ConduitClient(
+    CONDUIT_TOKEN,
+    BASE_PHABRICATOR_URL,
+    slackClient
+  );
+
   it("has a fetchUser method", async () => {
-    const client = new ConduitClient(CONDUIT_TOKEN, BASE_PHABRICATOR_URL);
     const userData = await client.fetchUser("wendyboeker").catch((error) => {
       console.log(error);
     });
@@ -33,7 +42,6 @@ describe("Integration tests for conduit client", () => {
   });
 
   it("has a fetchDiffs method", async () => {
-    const client = new ConduitClient(CONDUIT_TOKEN, BASE_PHABRICATOR_URL);
     const userData = await client.fetchUser("wendyboeker").catch((error) => {
       console.log(error);
     });
@@ -45,13 +53,26 @@ describe("Integration tests for conduit client", () => {
     expect(diffsData.length).toBeGreaterThan(1);
   });
 
-  it("can fetchDiff from a month or more ago", async () => {
-    const client = new ConduitClient(CONDUIT_TOKEN, BASE_PHABRICATOR_URL);
-    const diffUrl = await client
-      .getMonthAgoDiffUrl("wendyboeker")
+  it("can fetchDiff from a month or more ago given a phabricator username", async () => {
+    const diffObj = await client
+      .getMonthAgoDiff("wendyboeker")
       .catch((error) => {
         console.log(error);
       });
-    expect(diffUrl).toContain("https://phabricator.khanacademy.org/");
+    expect(diffObj).toHaveProperty("phabricatorUrl");
+    expect(diffObj).toHaveProperty("summary");
+    expect(diffObj).toHaveProperty("title");
+    expect(diffObj.phabricatorUrl).toContain(
+      "https://phabricator.khanacademy.org/"
+    );
+  });
+
+  it("can getMonthAgoDiffMessage given a phabricator username", async () => {
+    const diffMessage = await client
+      .getMonthAgoDiffMessage("wendyboeker", "a month")
+      .catch((error) => {
+        console.log(error);
+      });
+    expect(diffMessage).toContain("https://phabricator.khanacademy.org/");
   });
 });

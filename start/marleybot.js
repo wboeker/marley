@@ -27,8 +27,6 @@ async function accessSecretVersion(name, versionNumber) {
   return payload;
 }
 
-
-
 /**
  * Asynchronous function to initialize marleybot.
  */
@@ -50,10 +48,11 @@ async function marleybotInit() {
   });
   const slackClient = new SlackClient(botToken, BASE_SLACK_URL);
   const conduitAPIToken = await accessSecretVersion("conduit-api-token", "1");
-  const client = new ConduitClient(conduitAPIToken, BASE_PHABRICATOR_URL);
-  const userData = await client.fetchUser("wendyboeker").catch((error) => {
-    console.log(error);
-  });
+  const conduitClient = new ConduitClient(
+    conduitAPIToken,
+    BASE_PHABRICATOR_URL
+  );
+
   const diffsData = await client.fetchDiffs(userData[0].phid).catch((error) => {
     console.log(error);
   });
@@ -63,7 +62,12 @@ async function marleybotInit() {
       ["hello", "hi"],
       ["message", "direct_message"],
       async (bot, message) => {
-        await bot.reply(message, userData[0].fields.username);
+        const emailName = await slackClient
+          .fetchEmailName(message.user)
+          .catch((error) => {
+            console.log(error);
+          });
+        await bot.reply(message, `What's up, ${emailName}?`);
       }
     );
     controller.hears(
@@ -71,14 +75,13 @@ async function marleybotInit() {
       ["message", "direct_message"],
       async (bot, message) => {
         console.log("MESSAGE", message, "MESSAGE USER", message.user);
-        const userData = await slackClient
-          .fetchUser(message.user)
+        const emailName = await slackClient
+          .fetchEmailName(message.user)
           .catch((error) => {
             console.log(error);
           });
-        const username = userData.profile.email.split("@")[0];
-        const diff = await client.getMonthAgoDiffUrl(username);
-        await bot.reply(message, diff);
+        const diff = await conduitClient.getMonthAgoDiffMessage(emailName);
+        await bot.reply(message, `Hi, ${emailName}! \n${diff}`);
       }
     );
   });

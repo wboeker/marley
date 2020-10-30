@@ -1,6 +1,8 @@
 const bent = require("bent");
 
-// A way to access the Slack API
+/**
+ * A client for accessing the Slack API.
+ */
 class SlackClient {
   constructor(apiToken, baseSlackUrl) {
     this.apiToken = apiToken;
@@ -8,12 +10,23 @@ class SlackClient {
   }
 
   async fetchUser(userID) {
-    console.log("USER ID IN FETCH USER", userID);
-    // console.log("TOKEN", this.apiToken[20]);
     const get = bent(this.baseSlackUrl, "GET", 200);
-    const response = await get("/api/users.profile.get?token=" + this.apiToken + "&user=" + userID);
+    const response = await get(
+      "/api/users.profile.get?token=" + this.apiToken + "&user=" + userID
+    );
     const jsonResponse = await response.json();
     return jsonResponse;
+  }
+
+  async fetchEmailName(userId) {
+    const userData = await this.fetchUser(userId).catch((error) => {
+      console.log(error);
+    });
+    let emailName = userData.profile.email.split("@")[0];
+    if (emailName == "alexvolpert") {
+      emailName = "volpert";
+    }
+    return emailName;
   }
 }
 

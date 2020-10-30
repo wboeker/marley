@@ -43,7 +43,7 @@ class ConduitClient {
     return jsonResponse.result.data;
   }
 
-  async getMonthAgoDiffUrl(username) {
+  async getMonthAgoDiff(username) {
     const userData = await this.fetchUser(username).catch((error) => {
       console.log(error);
     });
@@ -54,7 +54,16 @@ class ConduitClient {
     const approxMonthAgoDiff = diffsData.find((diff) =>
       is31DaysOrMoreApart(diff.fields.dateModified * 1000, today)
     );
-    return approxMonthAgoDiff.fields.uri;
+    return {
+      phabricatorUrl: approxMonthAgoDiff.fields.uri,
+      title: approxMonthAgoDiff.fields.title,
+      summary: approxMonthAgoDiff.fields.summary,
+    };
+  }
+
+  async getMonthAgoDiffMessage(username, timePeriod) {
+    const diff = await this.getMonthAgoDiff(username);
+    return `🎱 🎱 🎱 Fom ${timePeriod} ago: \n\n🔮 See your memories  > ${diff.phabricatorUrl} 🔮\n\nTitle: ${diff.title} \nSummary: ${diff.summary} \n\nBon travail !`;
   }
 }
 
