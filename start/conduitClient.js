@@ -48,26 +48,38 @@ class ConduitClient {
     const userData = await this.fetchUser(username).catch((error) => {
       console.log(error);
     });
-    const diffsData = await this.fetchDiffs(userData[0].phid).catch((error) => {
-      console.log(error);
-    });
-    const today = Date.now();
-    const approxMonthAgoDiff = diffsData.find((diff) =>
-      is31DaysOrMoreApart(diff.fields.dateModified * 1000, today)
-    );
-    const dateClosed = new Date(approxMonthAgoDiff.fields.dateModified * 1000);
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    let diffSummary = approxMonthAgoDiff.fields.summary;
-    if (approxMonthAgoDiff.fields.summary.length > 200) {
-      diffSummary = approxMonthAgoDiff.fields.summary.substring(0, 200) + "...";
-    }
+    if (!userData) {
+      return {
+        error:
+          "I'm sorry, I can't find your phabricator username! It must be different than your email address.",
+      };
+    } else {
+      const diffsData = await this.fetchDiffs(userData[0].phid).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+      const today = Date.now();
+      const approxMonthAgoDiff = diffsData.find((diff) =>
+        is31DaysOrMoreApart(diff.fields.dateModified * 1000, today)
+      );
+      const dateClosed = new Date(
+        approxMonthAgoDiff.fields.dateModified * 1000
+      );
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      let diffSummary = approxMonthAgoDiff.fields.summary;
+      if (approxMonthAgoDiff.fields.summary.length > 200) {
+        diffSummary =
+          approxMonthAgoDiff.fields.summary.substring(0, 200) + "...";
+      }
 
-    return {
-      phabricatorUrl: approxMonthAgoDiff.fields.uri,
-      title: approxMonthAgoDiff.fields.title,
-      summary: diffSummary,
-      dateClosed: dateClosed.toLocaleDateString("en-US", options),
-    };
+      return {
+        phabricatorUrl: approxMonthAgoDiff.fields.uri,
+        title: approxMonthAgoDiff.fields.title,
+        summary: diffSummary,
+        dateClosed: dateClosed.toLocaleDateString("en-US", options),
+      };
+    }
   }
 
   async getMonthAgoDiffMessage(username, timePeriod) {

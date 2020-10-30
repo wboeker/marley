@@ -66,11 +66,8 @@ async function marleybotInit() {
               console.log(error);
             });
           const diff = await conduitClient.getMonthAgoDiff(emailName);
-          if (!diff) {
-            await bot.reply(
-              message,
-              "I'm sorry, I can't find your phabricator username! It must be different than your email address."
-            );
+          if (diff.error) {
+            await bot.reply(message, error);
           } else {
             await bot.reply(
               message,
