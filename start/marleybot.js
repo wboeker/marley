@@ -15,11 +15,11 @@ const BASE_SLACK_URL = "https://slack.com";
  * @param {string} name The name of the secret.
  * @return {string} The string value of the secret.
  */
-async function accessSecretVersion(name, version) {
+async function accessSecretVersion(name, versionNumber) {
   const client = new SecretManagerServiceClient();
   const projectId = process.env.PROJECT_ID;
   const [version] = await client.accessSecretVersion({
-    name: `projects/${projectId}/secrets/${name}/versions/${version}`,
+    name: `projects/${projectId}/secrets/${name}/versions/${versionNumber}`,
   });
 
   // Extract the payload as a string.
