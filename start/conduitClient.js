@@ -1,3 +1,4 @@
+const { ConsoleLogger } = require("@slack/logger");
 const bent = require("bent");
 const formurlencoded = require("form-urlencoded").default;
 
@@ -56,11 +57,14 @@ class ConduitClient {
     );
     const dateClosed = new Date(approxMonthAgoDiff.fields.dateModified * 1000);
     const options = { year: "numeric", month: "long", day: "numeric" };
-
+    let diffSummary = approxMonthAgoDiff.fields.summary;
+    if (approxMonthAgoDiff.fields.summary.length > 700) {
+      diffSummary = approxMonthAgoDiff.fields.summary.substring(0, 700) + "...";
+    }
     return {
       phabricatorUrl: approxMonthAgoDiff.fields.uri,
       title: approxMonthAgoDiff.fields.title,
-      summary: approxMonthAgoDiff.fields.summary,
+      summary: diffSummary,
       dateClosed: dateClosed.toLocaleDateString("en-US", options),
     };
   }
