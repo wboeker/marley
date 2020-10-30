@@ -11,5 +11,6 @@ it("SlackClient has a fetchUser method", async () => {
   const userData = await client.fetchUser("U0191680A49").catch((error) => {
     console.log(error);
   });
+  console.log(userData);
   expect(userData.profile.email).toEqual("wendyboeker@khanacademy.org");
 });
