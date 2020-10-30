@@ -58,29 +58,32 @@ async function marleybotInit() {
       ["hello", "hi"],
       ["message", "direct_message"],
       async (bot, message) => {
-        const emailName = await slackClient
-          .fetchEmailName(message.user)
-          .catch((error) => {
-            console.log(error);
-          });
-        await bot.reply(message, `What's up, ${emailName}?`);
+        if (message.bot_id != message.user) {
+          const emailName = await slackClient
+            .fetchEmailName(message.user)
+            .catch((error) => {
+              console.log(error);
+            });
+          await bot.reply(message, `What's up, ${emailName}?`);
+        }
       }
     );
     controller.hears(
       ["memories"],
       ["message", "direct_message"],
       async (bot, message) => {
-        console.log("MESSAGE", message, "MESSAGE USER", message.user);
-        const emailName = await slackClient
-          .fetchEmailName(message.user)
-          .catch((error) => {
-            console.log(error);
-          });
-        const diff = await conduitClient.getMonthAgoDiffMessage(
-          emailName,
-          "month"
-        );
-        await bot.reply(message, `Hi, ${emailName}! \n\n\n${diff}`);
+        if (message.bot_id != message.user) {
+          const emailName = await slackClient
+            .fetchEmailName(message.user)
+            .catch((error) => {
+              console.log(error);
+            });
+          const diff = await conduitClient.getMonthAgoDiffMessage(
+            emailName,
+            "month"
+          );
+          await bot.reply(message, `Hi, ${emailName}! \n\n\n${diff}`);
+        }
       }
     );
   });
