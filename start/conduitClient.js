@@ -63,7 +63,7 @@ class ConduitClient {
 
   async getMonthAgoDiffMessage(username, timePeriod) {
     const diff = await this.getMonthAgoDiff(username);
-    return `🎱 🎱 🎱 Fom ${timePeriod} ago: \n\n🔮 See your memories  > ${diff.phabricatorUrl} 🔮\n\nTitle: ${diff.title} \nSummary: ${diff.summary} \n\n\n\n💪 💪 Bon travail ! 💪 💪`;
+    return `🎱 🎱 🎱 Fom a ${timePeriod} ago: \n\n🔮 See your memories  > ${diff.phabricatorUrl} 🔮\n\nTitle: ${diff.title} \nSummary: ${diff.summary} \n\n\n\n💪 💪 Bon travail ! 💪 💪`;
   }
 }
 

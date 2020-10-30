@@ -69,7 +69,7 @@ describe("Integration tests for conduit client", () => {
 
   it("can getMonthAgoDiffMessage given a phabricator username", async () => {
     const diffMessage = await client
-      .getMonthAgoDiffMessage("wendyboeker", "a month")
+      .getMonthAgoDiffMessage("wendyboeker", "month")
       .catch((error) => {
         console.log(error);
       });
