@@ -24,7 +24,7 @@ const messageTemplate = (diffUrl, diffTitle, diffSummary, diffDateClosed) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `_${diffSummary}_`,
+          text: `_ ${diffSummary} _`,
           verbatim: false,
         },
       },
