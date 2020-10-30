@@ -77,7 +77,7 @@ async function marleybotInit() {
             console.log(error);
           });
         const username = userData.profile.email.split("@")[0];
-        const diff = client.getMonthAgoDiffUrl(username);
+        const diff = await client.getMonthAgoDiffUrl(username);
         await bot.reply(message, diff);
       }
     );
